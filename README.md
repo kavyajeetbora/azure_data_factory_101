@@ -1,46 +1,65 @@
-# ADF Incremental Load Pipeline — Practice Project
+# ADF End-to-End Data Pipeline — Practice Project
 
-A hands-on Azure Data Factory project built to practice incremental/upsert data loading, pipeline orchestration, and automated monitoring alerts.
+A hands-on Azure Data Factory project covering multi-source ingestion, incremental loading, Medallion-style transformation, automated alerting, and Git-based version control.
 
 ## Overview
 
-Ingests source data (CSV/API) into Azure SQL Database using a metadata-driven pipeline, applies upsert logic during transformation, and sends email notifications on pipeline success or failure.
+Ingests data from three different source types into a Bronze layer, transforms it into a Silver layer using Mapping Data Flows, and sends email notifications on pipeline success or failure — all version-controlled via GitHub integration.
 
 ## Architecture
 
 ```
-Source (CSV / API)
-      │
-      ▼
-Azure Data Factory Pipeline
-  ├── Copy / Ingestion Activity
-  ├── Mapping Data Flow
-  │     ├── Schema mapping (source → sink)
-  │     └── AlterRow → Upsert if 1>0
-  ▼
-Azure SQL Database (Serverless) — adf_db
-      │
-      ▼ (on success/failure)
-Logic App (HTTP trigger)
-  └── Sends dynamic HTML email alert
+┌─ On-Prem Ingestion ───────────┐
+│                                │
+├─ SQL Incremental Ingestion ───┤──▶ Bronze Layer
+│  (Azure SQL DB + Watermark)   │
+│                                │
+└─ API Ingestion (Open Source) ─┘
+              │
+              ▼
+     Primary Orchestrator Pipeline
+       (runs all 3 sub-pipelines)
+              │
+              ├──▶ Logic App → Email Alert (Success / Failure)
+              │
+              ▼
+     Mapping Data Flow (ETL)
+              │
+              ▼
+         Silver Layer
 ```
+
+## Steps
+
+1. **Ingestion pipelines** (built using Copy Data tool and related activities) for three source types:
+   - **On-Prem Ingestion** — on-premises source to Azure via Integration Runtime
+   - **SQL Incremental Ingestion** — provisioned an Azure SQL Database, ingested data using a **watermark-based incremental load** pattern
+   - **API Ingestion** — pulled data from an open-source public API/URL
+   - All three land data in the **Bronze layer**
+
+2. **Primary orchestrator pipeline** — runs all three ingestion pipelines, then triggers a **Logic App** to send an email notification on success or failure
+
+3. **ETL transformation (Bronze → Silver)** — built using **Mapping Data Flow**, including schema mapping and `AlterRow`-based upsert logic
+
+4. **Git integration** — connected the Data Factory to **GitHub** for source control / version tracking of pipeline, dataset, and Data Flow definitions
 
 ## Components
 
-- **Azure Data Factory** — pipeline orchestration, Mapping Data Flow transformations
-- **Azure SQL Database (Serverless tier)** — target/sink, with auto-pause enabled
-- **Mapping Data Flow** — schema mapping + `AlterRow` transformation to upsert rows by key columns (insert-vs-update decision delegated to sink key matching)
-- **Logic App** — HTTP-triggered workflow, dynamic JSON payload from the pipeline, sends a status email (success/failure) with a dynamically built HTML body
+- **Azure Data Factory** — pipeline orchestration, Copy Data activities, Mapping Data Flows
+- **Azure SQL Database (Serverless)** — incremental-load source, watermark tracking
+- **Logic App** — HTTP-triggered, dynamic JSON payload from the pipeline, sends a status email (success/failure) with dynamic HTML body
+- **GitHub** — source control for ADF pipeline/dataset/Data Flow JSON definitions
 
 ## Key Concepts Practiced
 
-- Metadata-driven / incremental load pattern
+- Watermark-based incremental loading
+- Medallion architecture (Bronze → Silver)
 - Upsert logic via `AlterRow` + sink key columns
 - ADF expression syntax (`@expr` vs `@{expr}` string interpolation)
-- Inline vs. Dataset objects in Data Flows
 - Logic Apps HTTP trigger schema + dynamic content in actions
+- ADF Git integration and collaboration-branch workflow
 - Diagnosing Azure SQL serverless auto-pause/auto-resume behavior via Activity Log
 
-## Notes
+## Reference Tutorial
 
-Built as a practice project to close an ADF skill gap, following the *"Azure Data Factory End-To-End Project With Azure DevOps | 2025 Zero To Pro Guide"* tutorial.
+[![Watch the video](https://img.youtube.com/vi/Za_9XYwPbKM/0.jpg)](https://youtu.be/Za_9XYwPbKM)
