@@ -60,6 +60,12 @@ Ingests data from three different source types into a Bronze layer, transforms i
 - ADF Git integration and collaboration-branch workflow
 - Diagnosing Azure SQL serverless auto-pause/auto-resume behavior via Activity Log
 
+## Cost Analysis on Azure
+
+<img width="1007" height="357" alt="image" src="https://github.com/user-attachments/assets/1c05d766-9e40-48bb-a488-c83c2f2a7b1b" />
+
+
+
 ## Reference Tutorial
 
 [![Watch the video](https://img.youtube.com/vi/Za_9XYwPbKM/0.jpg)](https://youtu.be/Za_9XYwPbKM)
