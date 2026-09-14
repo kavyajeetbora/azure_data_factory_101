@@ -1,0 +1,22 @@
+{
+	"name": "FactTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "link_adfkavyajeetstorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Fact_Orders.parquet",
+				"folderPath": "fact_orders",
+				"fileSystem": "bronze"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

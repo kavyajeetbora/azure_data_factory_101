@@ -1,0 +1,17 @@
+{
+	"name": "kavyajeet_pc_link",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "FileServer",
+		"typeProperties": {
+			"host": "C:\\Users\\kavya\\OneDrive\\Documents\\Projects\\ADF-project",
+			"userId": "kavyajeetbora@gmail.com",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI0NzA2ZmIyNS1kYTYzLTQ3MDgtOWIwYS1mOTNmNDA3MDRjNGIiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "kavyajeet-PC",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

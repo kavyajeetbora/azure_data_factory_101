@@ -1,0 +1,15 @@
+{
+	"name": "ADF-101-tutorial",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "indiasouthcentral",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "6091fce8-1bac-46b5-bc65-3a5b02efc1a7",
+		"tenantId": "0c0bbf70-9563-430f-88cc-af06c76284e6"
+	}
+}

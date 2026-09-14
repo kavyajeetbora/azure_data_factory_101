@@ -1,0 +1,21 @@
+{
+	"name": "watermark_json",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "link_adfkavyajeetstorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "watermark_latest_date.json",
+				"folderPath": "monitor/last_updated",
+				"fileSystem": "bronze"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
